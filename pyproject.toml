@@ -14,7 +14,7 @@ npc-bot = 'npc_bot.main:main'
 python = "^3.11"
 langchain = "^0.0.343"
 discord-py = "^2.3.2"
-python-dotenv = "^1.0.0"
+python-dotenv = "^1.0.1"
 openai = "^1.3.6"
 
 
