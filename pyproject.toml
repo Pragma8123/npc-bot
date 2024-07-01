@@ -12,7 +12,7 @@ npc-bot = 'npc_bot.main:main'
 
 [tool.poetry.dependencies]
 python = "^3.11"
-langchain = "^0.2.3"
+langchain = "^0.2.6"
 discord-py = "^2.3.2"
 python-dotenv = "^1.0.1"
 setuptools = "^70.0.0"
