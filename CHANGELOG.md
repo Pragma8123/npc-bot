@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/Pragma8123/npc-bot/compare/v1.5.0...v1.5.1) (2025-06-05)
+
+
+### Bug Fixes
+
+* fix syntax issue with formatted string ([d45752d](https://github.com/Pragma8123/npc-bot/commit/d45752d3930be8578286ed1173e2c9fda05e22c2))
+
 # [1.5.0](https://github.com/Pragma8123/npc-bot/compare/v1.4.0...v1.5.0) (2025-06-05)
 
 
