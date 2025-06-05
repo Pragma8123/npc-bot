@@ -16,14 +16,14 @@ RUN apt-get update \
     build-essential
 
 # install poetry
-RUN pip install poetry
+RUN pip install --no-cache-dir poetry==2.1.3
 
 # copy project requirement files here to ensure they will be cached.
 WORKDIR /app
 COPY poetry.lock pyproject.toml ./
 
 # install runtime deps
-RUN poetry install --no-dev
+RUN poetry install --no-root
 
 COPY . .
 
@@ -39,7 +39,7 @@ WORKDIR /app
 COPY --from=build /app/dist/*.whl .
 
 # Install built package
-RUN pip install *.whl
+RUN pip install --no-cache-dir *.whl
 
 # Add and run as a non-root user
 RUN groupadd -g 10001 python && useradd -u 10000 -g python python
