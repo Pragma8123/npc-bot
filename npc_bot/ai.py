@@ -1,3 +1,4 @@
+import base64
 import os
 
 import aiohttp
@@ -5,20 +6,26 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SD_API_URL = os.environ["SD_API_URL"]
+OPENWEBUI_URL = os.environ["OPENWEBUI_URL"]
+OPENWEBUI_AUTH_TOKEN = os.environ["OPENWEBUI_AUTH_TOKEN"]
 
 
 async def generate_image(
-    prompt: str, negative_prompt: str, count: int
-) -> list[str] | None:
+    prompt: str,
+) -> bytes | None:
     async with aiohttp.ClientSession() as session:
         json = {
             "prompt": prompt,
-            "negative_prompt": negative_prompt,
-            "batch_size": count,
         }
         async with session.post(
-            f"{SD_API_URL}/sdapi/v1/txt2img", json=json
+            f"{OPENWEBUI_URL}/api/v1/images/generations",
+            json=json,
+            headers={"Authorization": f"Bearer {OPENWEBUI_AUTH_TOKEN}"},
         ) as response:
             data = await response.json()
-            return data["images"]
+            image_url = f"{OPENWEBUI_URL}{data[0]["url"]}"
+            async with session.get(
+                image_url, headers={"Authorization": f"Bearer {OPENWEBUI_AUTH_TOKEN}"}
+            ) as response:
+                image_bytes = await response.read()
+                return image_bytes
