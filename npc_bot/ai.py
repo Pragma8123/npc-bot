@@ -23,7 +23,7 @@ async def generate_image(
             headers={"Authorization": f"Bearer {OPENWEBUI_AUTH_TOKEN}"},
         ) as response:
             data = await response.json()
-            image_url = f"{OPENWEBUI_URL}{data[0]["url"]}"
+            image_url = f'{OPENWEBUI_URL}{data[0]["url"]}'
             async with session.get(
                 image_url, headers={"Authorization": f"Bearer {OPENWEBUI_AUTH_TOKEN}"}
             ) as response:
