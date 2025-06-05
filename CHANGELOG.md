@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/Pragma8123/npc-bot/compare/v1.4.0...v1.5.0) (2025-06-05)
+
+
+### Bug Fixes
+
+* **docker:** fix docker build ([ac4a025](https://github.com/Pragma8123/npc-bot/commit/ac4a025efbd768a5c9db34d5857f8a3fe06beee2))
+
+
+### Features
+
+* **ai:** switch to openwebui backend for ai tasks ([20aae14](https://github.com/Pragma8123/npc-bot/commit/20aae1418b4910a054599a433b6e153e6477394f))
+
 ## [1.3.3](https://github.com/Pragma8123/npc-bot/compare/v1.3.2...v1.3.3) (2024-07-03)
 
 
