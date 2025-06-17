@@ -1,9 +1,8 @@
 # Environment files
 *.env
 
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
+# node_modules
+node_modules/
 
 # Distribution / packaging
 dist/
