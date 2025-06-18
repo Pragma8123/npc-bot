@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
 name: Release
 
 on:
@@ -22,8 +23,7 @@ jobs:
           npm i -g \
           semantic-release \
           @semantic-release/git \
-          @semantic-release/changelog \
-          @semantic-release/exec
+          @semantic-release/changelog
 
       - name: Run semantic-release
         run: semantic-release
