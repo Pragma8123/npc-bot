@@ -144,15 +144,12 @@ export class CommandsService {
     const images: string[] = [];
 
     await Promise.all(
-      message.attachments.map(async (attachment) => {
-        if (
-          attachment.contentType &&
-          attachment.contentType.startsWith('image')
-        ) {
-          const response = await this.httpService.axiosRef.get(attachment.url, {
+      message.attachments.map(async ({ contentType, url }) => {
+        if (contentType && contentType.startsWith('image')) {
+          const { data } = await this.httpService.axiosRef.get(url, {
             responseType: 'arraybuffer',
           });
-          images.push(Buffer.from(response.data).toString('base64'));
+          images.push(Buffer.from(data).toString('base64'));
         }
       }),
     );
