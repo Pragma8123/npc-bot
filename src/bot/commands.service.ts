@@ -10,8 +10,9 @@ import {
 } from 'necord';
 import { AiService } from 'src/ai/ai.service';
 import { CompletionPromptDto } from './completion-prompt.dto';
-import { AttachmentBuilder, Message } from 'discord.js';
+import { AttachmentBuilder, Message, MessageFlags } from 'discord.js';
 import { ImagePromptDto } from './image-prompt.dto';
+import packageInfo from 'src/package-info';
 
 const EDIT_INTERVAL = 500; // ms
 
@@ -80,6 +81,21 @@ export class CommandsService {
       await interaction.editReply({
         content: 'There was an error generating your image :(',
       });
+    }
+  }
+
+  @SlashCommand({
+    name: 'version',
+    description: "NPC's version.",
+  })
+  async version(@Context() [interaction]: SlashCommandContext) {
+    try {
+      await interaction.reply({
+        content: `Version: ${packageInfo.version}`,
+        flags: MessageFlags.Ephemeral,
+      });
+    } catch (error) {
+      this.logger.error(`reply error: ${error}`);
     }
   }
 
