@@ -1,3 +1,15 @@
+# [1.6.0](https://github.com/Pragma8123/npc-bot/compare/v1.5.1...v1.6.0) (2025-06-18)
+
+
+### Bug Fixes
+
+* handle interrupts ([e94181d](https://github.com/Pragma8123/npc-bot/commit/e94181da926a5f69daa6a6f2ffe0514e571545af))
+
+
+### Features
+
+* add new message explain feature and prompt completion ([617ecd1](https://github.com/Pragma8123/npc-bot/commit/617ecd1d5cc5675cbda01e700468bcc77a195c35))
+
 ## [1.5.1](https://github.com/Pragma8123/npc-bot/compare/v1.5.0...v1.5.1) (2025-06-05)
 
 
