@@ -1,7 +1,8 @@
 {
   "name": "npc-bot",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.5.1",
+  "description": "AI-Powered Discord bot.",
+  "private": true,
   "scripts": {
     "build": "nest build",
     "eslint": "eslint",
