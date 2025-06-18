@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/Pragma8123/npc-bot/compare/v1.6.0...v1.7.0) (2025-06-18)
+
+
+### Features
+
+* add version command ([e61e462](https://github.com/Pragma8123/npc-bot/commit/e61e4621bcdefc01e1e812e7d1f196185f7c8d01))
+* **ai:** the 'explain' message command now supports images ([f8d1451](https://github.com/Pragma8123/npc-bot/commit/f8d1451178376cdc750a4ae2eeb6963797f42fad))
+
 # [1.6.0](https://github.com/Pragma8123/npc-bot/compare/v1.5.1...v1.6.0) (2025-06-18)
 
 
