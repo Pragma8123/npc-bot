@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { auditTime, Observable, Subject } from 'rxjs';
 import { CompletionChunk, ImageResponse } from './ai.types';
@@ -8,6 +8,8 @@ import { Readable } from 'stream';
 
 @Injectable()
 export class AiService {
+  private readonly logger = new Logger(AiService.name);
+
   constructor(
     private readonly configService: ConfigService,
     private readonly httpService: HttpService,
@@ -29,7 +31,7 @@ export class AiService {
     throw new Error('Error generating image.');
   }
 
-  completion(prompt: string): Observable<string> {
+  completion(prompt: string, images?: string[]): Observable<string> {
     let completionResponse = '';
 
     return new Observable<string>((subscriber) => {
@@ -39,6 +41,7 @@ export class AiService {
           {
             prompt,
             model: this.configService.get<string>('OPENWEBUI_API_MODEL'),
+            images,
             system: this.configService.get<string>('OPENWEBUI_SYSTEM_PROMPT'),
           },
           {
@@ -73,10 +76,14 @@ export class AiService {
     });
   }
 
-  throttledCompletion(prompt: string, interval: number): Observable<string> {
+  throttledCompletion(
+    prompt: string,
+    images: string[],
+    interval: number,
+  ): Observable<string> {
     const update$ = new Subject<string>();
 
-    this.completion(prompt).subscribe({
+    this.completion(prompt, images).subscribe({
       next: (chunk) => update$.next(chunk),
       error: (error) => update$.error(error),
       complete: () => update$.complete(),

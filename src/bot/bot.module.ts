@@ -5,6 +5,7 @@ import { NecordModule } from 'necord';
 import { CommandsService } from './commands.service';
 import { EventsService } from './events.service';
 import { AiModule } from 'src/ai/ai.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { AiModule } from 'src/ai/ai.module';
       }),
     }),
     AiModule,
+    HttpModule.register({}),
   ],
   providers: [CommandsService, EventsService],
 })

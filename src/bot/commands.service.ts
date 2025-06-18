@@ -13,6 +13,7 @@ import { CompletionPromptDto } from './completion-prompt.dto';
 import { AttachmentBuilder, Message, MessageFlags } from 'discord.js';
 import { ImagePromptDto } from './image-prompt.dto';
 import packageInfo from 'src/package-info';
+import { HttpService } from '@nestjs/axios';
 
 const EDIT_INTERVAL = 500; // ms
 
@@ -20,7 +21,10 @@ const EDIT_INTERVAL = 500; // ms
 export class CommandsService {
   private readonly logger = new Logger(CommandsService.name);
 
-  constructor(private readonly aiService: AiService) { }
+  constructor(
+    private readonly aiService: AiService,
+    private readonly httpService: HttpService,
+  ) { }
 
   @SlashCommand({
     name: 'completion',
@@ -32,7 +36,7 @@ export class CommandsService {
   ) {
     await interaction.deferReply();
 
-    this.aiService.throttledCompletion(prompt, EDIT_INTERVAL).subscribe({
+    this.aiService.throttledCompletion(prompt, null, EDIT_INTERVAL).subscribe({
       next: async (content) => {
         try {
           await interaction.editReply({ content });
@@ -106,24 +110,53 @@ export class CommandsService {
   ) {
     await interaction.deferReply();
 
-    const prompt = `Explain this Discord message: ${message.content}`;
+    let images = [];
+    try {
+      images = await this.getAttachedImagesBase64(message);
+    } catch (error) {
+      this.logger.error(`Error fetching images: ${error}`);
+    }
 
-    this.aiService.throttledCompletion(prompt, EDIT_INTERVAL).subscribe({
-      next: async (content) => {
-        try {
-          await interaction.editReply({ content });
-        } catch (error) {
-          this.logger.error(`editReply error: ${error}`);
+    const prompt = `Explain this discord message and the attached messages if present: ${message.content}`;
+
+    this.aiService
+      .throttledCompletion(prompt, images, EDIT_INTERVAL)
+      .subscribe({
+        next: async (content) => {
+          try {
+            await interaction.editReply({ content });
+          } catch (error) {
+            this.logger.error(`editReply error: ${error}`);
+          }
+        },
+        error: async (error) => {
+          try {
+            this.logger.error(error);
+            await interaction.editReply({ content: `There was an error :(` });
+          } catch (error) {
+            this.logger.error(`editReply error: ${error}`);
+          }
+        },
+      });
+  }
+
+  private async getAttachedImagesBase64(message: Message): Promise<string[]> {
+    const images: string[] = [];
+
+    await Promise.all(
+      message.attachments.map(async (attachment) => {
+        if (
+          attachment.contentType &&
+          attachment.contentType.startsWith('image')
+        ) {
+          const response = await this.httpService.axiosRef.get(attachment.url, {
+            responseType: 'arraybuffer',
+          });
+          images.push(Buffer.from(response.data).toString('base64'));
         }
-      },
-      error: async (error) => {
-        try {
-          this.logger.error(error);
-          await interaction.editReply({ content: `There was an error :(` });
-        } catch (error) {
-          this.logger.error(`editReply error: ${error}`);
-        }
-      },
-    });
+      }),
+    );
+
+    return images;
   }
 }
