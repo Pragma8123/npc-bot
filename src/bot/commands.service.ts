@@ -10,7 +10,12 @@ import {
 } from 'necord';
 import { AiService } from 'src/ai/ai.service';
 import { CompletionPromptDto } from './completion-prompt.dto';
-import { AttachmentBuilder, Message, MessageFlags } from 'discord.js';
+import {
+  AttachmentBuilder,
+  EmbedBuilder,
+  Message,
+  MessageFlags,
+} from 'discord.js';
 import { ImagePromptDto } from './image-prompt.dto';
 import packageInfo from 'src/package-info';
 import { HttpService } from '@nestjs/axios';
@@ -24,7 +29,7 @@ export class CommandsService {
   constructor(
     private readonly aiService: AiService,
     private readonly httpService: HttpService,
-  ) { }
+  ) {}
 
   @SlashCommand({
     name: 'completion',
@@ -67,18 +72,12 @@ export class CommandsService {
 
     try {
       const imageBuffer = await this.aiService.image(prompt);
-      const image = new AttachmentBuilder(imageBuffer, { name: 'image.png' });
-      image.setSpoiler(true);
+      const image = new AttachmentBuilder(imageBuffer, {
+        name: 'image.png',
+      }).setSpoiler(true);
       await interaction.editReply({
-        content: `\`${prompt}\``,
+        content: `**Prompt**: ${prompt}`,
         files: [image],
-        embeds: [
-          {
-            image: {
-              url: `attachment://${image.name}`,
-            },
-          },
-        ],
       });
     } catch (error) {
       this.logger.error(`Error generating image: ${error}`);

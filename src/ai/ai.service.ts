@@ -23,7 +23,7 @@ export class AiService {
 
     if (data[0].url) {
       const response = await this.httpService.axiosRef.get(data[0].url, {
-        responseType: 'blob',
+        responseType: 'arraybuffer',
       });
       return Buffer.from(response.data);
     }
