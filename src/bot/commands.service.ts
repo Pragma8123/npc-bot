@@ -10,12 +10,7 @@ import {
 } from 'necord';
 import { AiService } from 'src/ai/ai.service';
 import { CompletionPromptDto } from './completion-prompt.dto';
-import {
-  AttachmentBuilder,
-  EmbedBuilder,
-  Message,
-  MessageFlags,
-} from 'discord.js';
+import { AttachmentBuilder, Message, MessageFlags } from 'discord.js';
 import { ImagePromptDto } from './image-prompt.dto';
 import packageInfo from 'src/package-info';
 import { HttpService } from '@nestjs/axios';
