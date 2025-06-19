@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/Pragma8123/npc-bot/compare/v1.7.0...v1.7.1) (2025-06-19)
+
+
+### Bug Fixes
+
+* **ai:** fix image generation reply formatting ([7a22d24](https://github.com/Pragma8123/npc-bot/commit/7a22d24484eab430b9f463a12920872ffd0fdb83))
+
 # [1.7.0](https://github.com/Pragma8123/npc-bot/compare/v1.6.0...v1.7.0) (2025-06-18)
 
 
