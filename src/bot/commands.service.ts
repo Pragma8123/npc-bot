@@ -14,8 +14,7 @@ import { AttachmentBuilder, Message, MessageFlags } from 'discord.js';
 import { ImagePromptDto } from './image-prompt.dto';
 import packageInfo from 'src/package-info';
 import { HttpService } from '@nestjs/axios';
-
-const EDIT_INTERVAL = 500; // ms
+import { EDIT_INTERVAL } from 'src/constants';
 
 @Injectable()
 export class CommandsService {
